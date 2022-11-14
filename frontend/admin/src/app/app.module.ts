@@ -9,9 +9,13 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { ArticleManagementComponent } from './views/article-management/article-management.component';
+import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { ArticleManagementComponent } from './views/home/article-management/article-management.component';
 import { ArticleComponent } from './views/article/article.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './views/login/login.component';
 
 @NgModule({
   declarations: [
@@ -19,16 +23,20 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     ArticleManagementComponent,
     ArticleComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     CKEditorModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    HttpClientModule,
+    MatListModule,
+    MatTableModule,
+    MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

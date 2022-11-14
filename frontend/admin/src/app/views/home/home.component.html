@@ -1,0 +1,35 @@
+<div class="home">
+  <header>
+    <mat-toolbar color="primary">
+      <span class="site-title">
+        <img src="../assets/avatar.jpeg" />
+        <span>Nayuta's Blog</span>
+      </span>
+      <span class="spacer"></span>
+      <button
+        mat-icon-button
+        [attr.aria-label]="
+          theme === 'light' ? 'change to dark mode' : 'Change to light mode'
+        "
+        (click)="toggleTheme()"
+      >
+        <mat-icon>{{
+          theme === "light" ? "light_mode" : "dark_mode"
+        }}</mat-icon>
+      </button>
+    </mat-toolbar>
+  </header>
+  <div class="main-container">
+    <nav>
+      <mat-nav-list>
+        <a mat-list-item routerLink="/articleManagement" routerLinkActive="router-active">
+          <mat-icon>article</mat-icon>
+          <span>Article Management</span>
+        </a>
+      </mat-nav-list>
+    </nav>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
