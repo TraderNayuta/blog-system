@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatChipsModule } from '@angular/material/chips';
 import { ArticleManagementComponent } from './views/home/article-management/article-management.component';
 import { ArticleComponent } from './views/article/article.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -23,7 +24,7 @@ import { LoginComponent } from './views/login/login.component';
     HomeComponent,
     ArticleManagementComponent,
     ArticleComponent,
-    LoginComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +38,7 @@ import { LoginComponent } from './views/login/login.component';
     MatListModule,
     MatTableModule,
     MatPaginatorModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

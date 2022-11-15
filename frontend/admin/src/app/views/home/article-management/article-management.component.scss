@@ -1,8 +1,18 @@
 .article-management {
   height: 100%;
   overflow: auto;
-}
 
-.mat-table {
-  width: 100%;
+  .btn-container {
+    text-align: right;
+  }
+
+  .mat-table {
+    width: 100%;
+    margin-top: 16px;
+
+    .article-link {
+      color: #3f51b5;
+      text-decoration: none;
+    }
+  }
 }

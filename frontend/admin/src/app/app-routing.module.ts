@@ -8,20 +8,22 @@ import { LoginComponent } from './views/login/login.component';
 const routes: Routes = [
   {
     path: 'login',
+    title: 'Login',
     component: LoginComponent,
   },
   {
     path: '',
     component: HomeComponent,
     children: [
-      { path: 'articleManagement', component: ArticleManagementComponent },
+      { path: 'articleManagement', title: 'Article Management', component: ArticleManagementComponent },
+      { path: '**', redirectTo: 'articleManagement' }
     ],
   },
-  { path: 'article/:articleId', component: ArticleComponent },
+  { path: 'article/:articleId', title: 'Article', component: ArticleComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
