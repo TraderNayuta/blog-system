@@ -1,6 +1,11 @@
 <div class="article-management">
   <div class="btn-container">
-    <button mat-raised-button color="primary" aria-label="Create a new article">
+    <button
+      mat-raised-button
+      color="primary"
+      aria-label="Create a new article"
+      routerLink="/createArticle"
+    >
       新增文章
     </button>
   </div>
@@ -8,7 +13,7 @@
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef>标题</th>
       <td mat-cell *matCellDef="let element">
-        <a class="article-link" [routerLink]="['/article', element.id]">
+        <a class="article-link" [routerLink]="['/editArticle', element.id]">
           {{ element.title }}
         </a>
       </td>
@@ -39,13 +44,36 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>操作</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" aria-label="Edit this article">
+        <button
+          mat-icon-button
+          color="primary"
+          aria-label="Edit this article"
+          [routerLink]="['/editArticle', element.id]"
+        >
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="accent" aria-label="Publish this article">
+        <button
+          mat-icon-button
+          aria-label="Preview this article"
+          [routerLink]="['/previewArticle', element.id]"
+        >
+          <mat-icon>preview</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="accent"
+          aria-label="Publish this article"
+          [disabled]="element.status !== 'draft'"
+          (click)="openDialog('Publish', element)"
+        >
           <mat-icon>publish</mat-icon>
         </button>
-        <button mat-icon-button color="warn" aria-label="Delete this article">
+        <button
+          mat-icon-button
+          color="warn"
+          aria-label="Delete this article"
+          (click)="openDialog('Publish', element)"
+        >
           <mat-icon>delete</mat-icon>
         </button>
       </td>
@@ -54,6 +82,10 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[10]" showFirstLastButtons aria-label="Select page of article elements">
+  <mat-paginator
+    [pageSizeOptions]="[10]"
+    showFirstLastButtons
+    aria-label="Select page of article elements"
+  >
   </mat-paginator>
 </div>

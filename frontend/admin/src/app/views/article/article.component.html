@@ -1,1 +1,36 @@
-<p>article works!</p>
+<div class="article">
+  <div class="btn-container">
+    <button mat-icon-button color="primary" aria-label="Save the article">
+      <mat-icon>save</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      color="primary"
+      aria-label="Preview the article"
+      [routerLink]="['/previewArticle', articleId]"
+    >
+      <mat-icon>preview</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      aria-label="Go back to previous page"
+      (click)="goBack()"
+    >
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+  <div [formGroup]="form">
+    <mat-form-field appearance="standard">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" placeholder="Title" />
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>Category</mat-label>
+      <mat-select multiple>
+        <mat-option *ngFor="let category of categories" [value]="category.id">{{
+          category.name.zh
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

@@ -13,10 +13,17 @@ import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatChipsModule } from '@angular/material/chips';
-import { ArticleManagementComponent } from './views/home/article-management/article-management.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { ArticleManagementComponent } from './views/article-management/article-management.component';
 import { ArticleComponent } from './views/article/article.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './views/login/login.component';
+import { PreviewComponent } from './views/preview/preview.component';
+import { DoubleConfirmDialogComponent } from './components/double-confirm-dialog/double-confirm-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,13 +31,16 @@ import { LoginComponent } from './views/login/login.component';
     HomeComponent,
     ArticleManagementComponent,
     ArticleComponent,
-    LoginComponent
+    LoginComponent,
+    PreviewComponent,
+    DoubleConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     CKEditorModule,
     MatToolbarModule,
     MatIconModule,
@@ -38,7 +48,11 @@ import { LoginComponent } from './views/login/login.component';
     MatListModule,
     MatTableModule,
     MatPaginatorModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

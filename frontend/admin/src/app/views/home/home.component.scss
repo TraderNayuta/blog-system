@@ -10,15 +10,11 @@
       justify-content: space-around;
       align-items: center;
 
-      >img {
+      > img {
         width: 36px;
         height: 36px;
         border-radius: 50%;
       }
-    }
-
-    .spacer {
-      flex-grow: 1;
     }
   }
 
