@@ -1,36 +1,38 @@
 <div class="article">
   <div class="btn-container">
-    <button mat-icon-button color="primary" aria-label="Save the article">
+    <button mat-icon-button color="primary" aria-label="Save the article" (click)="save()">
       <mat-icon>save</mat-icon>
     </button>
-    <button
-      mat-icon-button
-      color="primary"
-      aria-label="Preview the article"
-      [routerLink]="['/previewArticle', articleId]"
-    >
+    <button mat-icon-button color="primary" aria-label="Preview the article" (click)="preview()">
       <mat-icon>preview</mat-icon>
     </button>
-    <button
-      mat-icon-button
-      aria-label="Go back to previous page"
-      (click)="goBack()"
-    >
+    <button mat-icon-button aria-label="Go back to previous page" (click)="goBack()">
       <mat-icon>arrow_back</mat-icon>
     </button>
   </div>
   <div [formGroup]="form">
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="standard" #title>
       <mat-label>Title</mat-label>
       <input matInput formControlName="title" placeholder="Title" />
+      <mat-error *ngIf="getControl('title').hasError('required')">Title is required!</mat-error>
     </mat-form-field>
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="standard" #category>
       <mat-label>Category</mat-label>
-      <mat-select multiple>
-        <mat-option *ngFor="let category of categories" [value]="category.id">{{
+      <mat-select multiple formControlName="categories">
+        <mat-option *ngFor=" let category of categories" [value]="category.id">{{
           category.name.zh
-        }}</mat-option>
+          }}</mat-option>
       </mat-select>
+      <mat-error *ngIf="getControl('categories').hasError('required')">Category is required!</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="standard" #tag>
+      <mat-label>Tag</mat-label>
+      <mat-select multiple formControlName="tags">
+        <mat-option *ngFor="let tag of tags" [value]="tag.id">{{
+          tag.name.zh
+          }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="getControl('tags').hasError('required')">Tag is required!</mat-error>
     </mat-form-field>
   </div>
 </div>
