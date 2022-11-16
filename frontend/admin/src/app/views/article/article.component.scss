@@ -1,7 +1,44 @@
-.mat-raised-button {
-  margin: 0 6px;
-}
+.article {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
-.mat-form-field {
-  width: 100%;
+  .form-container {
+    width: 1280px;
+    margin: 0 auto;
+    flex: 1;
+
+    > div {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-field-with-btn {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .mat-raised-button {
+      margin: 0 6px;
+    }
+
+    .mat-form-field {
+      width: 100%;
+    }
+
+    .rich-text-editor-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+
+      ::ng-deep .ck-editor__editable_inline {
+        height: 400px;
+      }
+    }
+  }
 }

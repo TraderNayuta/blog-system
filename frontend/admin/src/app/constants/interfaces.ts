@@ -1,4 +1,4 @@
-import { ArticleStatus } from './types';
+import { ActionTarget, ActionType, ArticleStatus } from './types';
 
 export interface Base {
   id?: string;
@@ -29,7 +29,12 @@ export interface Category extends Base {
   };
 }
 
-export interface DialogData {
+export interface DoubleConfirmDialogData {
   header: string;
   content: string;
+}
+
+export interface AddDialogData {
+  actionType: ActionType;
+  type: ActionTarget;
 }

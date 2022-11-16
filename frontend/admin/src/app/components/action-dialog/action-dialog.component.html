@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>{{ data.actionType }} {{ data.type }}</h1>
+<div mat-dialog-content>
+  <div [formGroup]="form">
+    <mat-form-field appearance="standard">
+      <mat-label>Chinese</mat-label>
+      <input
+        matInput
+        formControlName="zh"
+        placeholder="Please input Chinese name"
+      />
+      <mat-error *ngIf="getControl('zh').hasError('required')"
+        >Chinese name is required!</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>English</mat-label>
+      <input
+        matInput
+        formControlName="en"
+        placeholder="Please input english name"
+      />
+      <mat-error *ngIf="getControl('zh').hasError('required')"
+        >Chinese name is required!</mat-error
+      >
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="close()">Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+  >
+    Confirm
+  </button>
+</div>

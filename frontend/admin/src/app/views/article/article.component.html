@@ -1,38 +1,122 @@
 <div class="article">
   <div class="btn-container">
-    <button mat-icon-button color="primary" aria-label="Save the article" (click)="save()">
+    <button
+      mat-icon-button
+      color="primary"
+      aria-label="Save the article"
+      (click)="save()"
+    >
       <mat-icon>save</mat-icon>
     </button>
-    <button mat-icon-button color="primary" aria-label="Preview the article" (click)="preview()">
+    <button
+      mat-icon-button
+      color="primary"
+      aria-label="Preview the article"
+      (click)="preview()"
+    >
       <mat-icon>preview</mat-icon>
     </button>
-    <button mat-icon-button aria-label="Go back to previous page" (click)="goBack()">
+    <button
+      mat-icon-button
+      aria-label="Go back to previous page"
+      (click)="goBack()"
+    >
       <mat-icon>arrow_back</mat-icon>
     </button>
   </div>
-  <div [formGroup]="form">
-    <mat-form-field appearance="standard" #title>
-      <mat-label>Title</mat-label>
-      <input matInput formControlName="title" placeholder="Title" />
-      <mat-error *ngIf="getControl('title').hasError('required')">Title is required!</mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="standard" #category>
-      <mat-label>Category</mat-label>
-      <mat-select multiple formControlName="categories">
-        <mat-option *ngFor=" let category of categories" [value]="category.id">{{
-          category.name.zh
-          }}</mat-option>
-      </mat-select>
-      <mat-error *ngIf="getControl('categories').hasError('required')">Category is required!</mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="standard" #tag>
-      <mat-label>Tag</mat-label>
-      <mat-select multiple formControlName="tags">
-        <mat-option *ngFor="let tag of tags" [value]="tag.id">{{
-          tag.name.zh
-          }}</mat-option>
-      </mat-select>
-      <mat-error *ngIf="getControl('tags').hasError('required')">Tag is required!</mat-error>
-    </mat-form-field>
+  <div class="form-container">
+    <div [formGroup]="form">
+      <div class="article-title-form-field">
+        <mat-form-field appearance="standard">
+          <mat-label>Chinese title</mat-label>
+          <input
+            matInput
+            formControlName="zhTitle"
+            placeholder="Chinese title"
+          />
+          <mat-error *ngIf="getControl('zhTitle').hasError('required')"
+            >Chinese title is required!</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>English title</mat-label>
+          <input
+            matInput
+            formControlName="enTitle"
+            placeholder="English title"
+          />
+          <mat-error *ngIf="getControl('enTitle').hasError('required')"
+            >English title is required!</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="form-field-with-btn">
+        <mat-form-field appearance="standard">
+          <mat-label>Category</mat-label>
+          <mat-select multiple formControlName="categories">
+            <mat-option
+              *ngFor="let category of categories"
+              [value]="category.id"
+              >{{ category.name.zh }}</mat-option
+            >
+          </mat-select>
+          <mat-error *ngIf="getControl('categories').hasError('required')"
+            >Category is required!</mat-error
+          >
+        </mat-form-field>
+        <button
+          mat-mini-fab
+          color="primary"
+          aria-label="Add a category"
+          (click)="openAddDialog('category')"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div class="form-field-with-btn">
+        <mat-form-field appearance="standard">
+          <mat-label>Tag</mat-label>
+          <mat-select multiple formControlName="tags">
+            <mat-option *ngFor="let tag of tags" [value]="tag.id">{{
+              tag.name.zh
+            }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="getControl('tags').hasError('required')"
+            >Tag is required!</mat-error
+          >
+        </mat-form-field>
+        <button
+          mat-mini-fab
+          color="primary"
+          aria-label="Add a tag"
+          (click)="openAddDialog('tag')"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div class="rich-text-editor-container">
+        <mat-button-toggle-group
+          #group="matButtonToggleGroup"
+          value="zh"
+          name="Language"
+          aria-label="Article language"
+        >
+          <mat-button-toggle value="zh">中文</mat-button-toggle>
+          <mat-button-toggle value="en">English</mat-button-toggle>
+        </mat-button-toggle-group>
+        <ckeditor
+          class="content-editor"
+          [hidden]="group.value === 'en'"
+          [editor]="Editor"
+          formControlName="zhContent"
+        ></ckeditor>
+        <ckeditor
+          class="content-editor"
+          [hidden]="group.value === 'zh'"
+          [editor]="Editor"
+          formControlName="enContent"
+        ></ckeditor>
+      </div>
+    </div>
   </div>
 </div>

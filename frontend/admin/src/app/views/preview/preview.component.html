@@ -1,5 +1,13 @@
 <div class="preview">
   <div class="btn-container">
+    <button
+      mat-icon-button
+      color="primary"
+      aria-label="Edit the article"
+      [routerLink]="['/editArticle', articleId]"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
     <button mat-icon-button color="primary" aria-label="Publish the article">
       <mat-icon>publish</mat-icon>
     </button>
@@ -10,5 +18,8 @@
     >
       <mat-icon>arrow_back</mat-icon>
     </button>
+  </div>
+  <div class="article-container">
+    <div [outerHTML]="articleContent"></div>
   </div>
 </div>

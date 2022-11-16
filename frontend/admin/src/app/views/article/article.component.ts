@@ -10,6 +10,10 @@ import {
 import { GlobalService } from 'src/app/services/global/global.service';
 import { Category, Tag } from 'src/app/constants/interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ActionTarget } from 'src/app/constants/types';
+import { ActionDialogComponent } from 'src/app/components/action-dialog/action-dialog.component';
+import Editor from '../../../../ckeditor5/build/ckeditor.js';
 
 @Component({
   selector: 'app-article',
@@ -17,6 +21,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./article.component.scss'],
 })
 export class ArticleComponent implements OnInit {
+  public Editor = Editor;
+
   articleId: string;
   form: FormGroup;
   categories: Category[];
@@ -28,29 +34,32 @@ export class ArticleComponent implements OnInit {
     private router: Router,
     private location: Location,
     private fb: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) {
     this.routerInfo.params.subscribe((params) => {
       this.articleId = params['id'];
     });
 
     this.form = this.fb.group({
-      title: [null, Validators.required],
+      zhTitle: [null, Validators.required],
+      enTitle: [null, Validators.required],
       categories: [[], Validators.required],
       tags: [[], Validators.required],
-      content: [null],
+      zhContent: [null],
+      enContent: [null],
     });
 
-    this.globalService.categories.subscribe(categories => {
+    this.globalService.categories.subscribe((categories) => {
       this.categories = categories;
-    })
+    });
 
-    this.globalService.tags.subscribe(tags => {
+    this.globalService.tags.subscribe((tags) => {
       this.tags = tags;
-    })
+    });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   goBack() {
     this.location.back();
@@ -66,6 +75,7 @@ export class ArticleComponent implements OnInit {
   }
 
   save(): void {
+    console.log(this.form.controls['zhContent'].value);
     this.formValidate();
 
     if (this.form.valid) {
@@ -81,5 +91,15 @@ export class ArticleComponent implements OnInit {
     } else {
       // this.router.navigateByUrl(`/previewArticle/${this.articleId}`)
     }
+  }
+
+  openAddDialog(type: ActionTarget): void {
+    this.dialog.open(ActionDialogComponent, {
+      width: '400px',
+      data: {
+        actionType: 'Add',
+        type,
+      },
+    });
   }
 }

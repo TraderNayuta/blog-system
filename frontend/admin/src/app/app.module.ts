@@ -17,7 +17,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import {
+  MatSnackBarModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+} from '@angular/material/snack-bar';
 import { ArticleManagementComponent } from './views/article-management/article-management.component';
 import { ArticleComponent } from './views/article/article.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -25,6 +29,7 @@ import { LoginComponent } from './views/login/login.component';
 import { PreviewComponent } from './views/preview/preview.component';
 import { DoubleConfirmDialogComponent } from './components/double-confirm-dialog/double-confirm-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ActionDialogComponent } from './components/action-dialog/action-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +40,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     LoginComponent,
     PreviewComponent,
     DoubleConfirmDialogComponent,
+    ActionDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,11 +60,19 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatButtonToggleModule,
   ],
   providers: [
-    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2000, horizontalPosition: 'center', verticalPosition: 'top' } }
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: {
+        duration: 2000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      },
+    },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
