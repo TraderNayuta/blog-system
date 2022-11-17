@@ -8,8 +8,9 @@
     width: 1280px;
     margin: 0 auto;
     flex: 1;
+    overflow: auto;
 
-    > div {
+    >div {
       height: 100%;
       display: flex;
       flex-direction: column;
