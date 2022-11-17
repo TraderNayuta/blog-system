@@ -3,18 +3,18 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { DoubleConfirmDialogComponent } from 'src/app/components/double-confirm-dialog/double-confirm-dialog.component';
-import { Article } from 'src/app/constants/interfaces';
+import { Post } from 'src/app/constants/interfaces';
 import { ELEMENT_DATA } from 'src/app/constants/mock';
 import { DialogActionType } from 'src/app/constants/types';
 
 @Component({
-  selector: 'app-article-management',
-  templateUrl: './article-management.component.html',
-  styleUrls: ['./article-management.component.scss'],
+  selector: 'app-post-management',
+  templateUrl: './post-management.component.html',
+  styleUrls: ['./post-management.component.scss'],
 })
-export class ArticleManagementComponent implements OnInit, AfterViewInit {
+export class PostManagementComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['title', 'categories', 'tags', 'actions'];
-  dataSource = new MatTableDataSource<Article>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<Post>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(public dialog: MatDialog) {}
@@ -29,7 +29,7 @@ export class ArticleManagementComponent implements OnInit, AfterViewInit {
     // 查询 Article 列表
   }
 
-  openDialog(type: DialogActionType, article: Article): void {
+  openDialog(type: DialogActionType, article: Post): void {
     const dialogRef = this.dialog.open(DoubleConfirmDialogComponent, {
       width: '400px',
       data: {

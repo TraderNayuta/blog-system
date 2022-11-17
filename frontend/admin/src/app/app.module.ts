@@ -22,8 +22,8 @@ import {
   MatSnackBarModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
-import { ArticleManagementComponent } from './views/article-management/article-management.component';
-import { ArticleComponent } from './views/article/article.component';
+import { PostManagementComponent } from './views/post-management/post-management.component';
+import { PostComponent } from './views/post/post.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './views/login/login.component';
 import { PreviewComponent } from './views/preview/preview.component';
@@ -35,8 +35,8 @@ import { ActionDialogComponent } from './components/action-dialog/action-dialog.
   declarations: [
     AppComponent,
     HomeComponent,
-    ArticleManagementComponent,
-    ArticleComponent,
+    PostManagementComponent,
+    PostComponent,
     LoginComponent,
     PreviewComponent,
     DoubleConfirmDialogComponent,

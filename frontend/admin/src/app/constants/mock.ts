@@ -1,6 +1,6 @@
-import { Article, Category, Tag } from './interfaces';
+import { Category, Post, Tag } from './interfaces';
 
-export const ELEMENT_DATA: Article[] = [
+export const ELEMENT_DATA: Post[] = [
   {
     id: 'hello',
     title: 'Angular 中如何使用自定义构建的 CKeditor',

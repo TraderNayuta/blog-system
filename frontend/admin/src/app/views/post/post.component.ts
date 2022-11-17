@@ -16,11 +16,11 @@ import { ActionDialogComponent } from 'src/app/components/action-dialog/action-d
 import Editor from '../../../../ckeditor5/build/ckeditor.js';
 
 @Component({
-  selector: 'app-article',
-  templateUrl: './article.component.html',
-  styleUrls: ['./article.component.scss'],
+  selector: 'app-post',
+  templateUrl: './post.component.html',
+  styleUrls: ['./post.component.scss'],
 })
-export class ArticleComponent implements OnInit {
+export class PostComponent implements OnInit {
   public Editor = Editor;
 
   articleId: string;

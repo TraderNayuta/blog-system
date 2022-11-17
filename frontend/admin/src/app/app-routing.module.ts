@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ArticleManagementComponent } from './views/article-management/article-management.component';
-import { ArticleComponent } from './views/article/article.component';
+import { PostManagementComponent } from './views/post-management/post-management.component';
+import { PostComponent } from './views/post/post.component';
 import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/login/login.component';
 import { PreviewComponent } from './views/preview/preview.component';
@@ -19,17 +19,17 @@ const routes: Routes = [
       {
         path: 'articleManagement',
         title: 'Article Management',
-        component: ArticleManagementComponent,
+        component: PostManagementComponent,
       },
       {
         path: 'createArticle',
         title: 'Create Article',
-        component: ArticleComponent,
+        component: PostComponent,
       },
       {
         path: 'editArticle/:id',
         title: 'Edit Article',
-        component: ArticleComponent,
+        component: PostComponent,
       },
       {
         path: 'previewArticle/:id',

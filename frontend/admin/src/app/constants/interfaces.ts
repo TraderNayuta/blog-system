@@ -1,10 +1,10 @@
-import { ActionTarget, ActionType, ArticleStatus } from './types';
+import { ActionTarget, ActionType, PostStatus } from './types';
 
 export interface Base {
   id?: string;
 }
 
-export interface Article extends Base {
+export interface Post extends Base {
   title: string;
   tags: Tag[];
   categories: Category[];
@@ -12,7 +12,7 @@ export interface Article extends Base {
     zh: string;
     en: string;
   };
-  status: ArticleStatus;
+  status: PostStatus;
 }
 
 export interface Tag extends Base {
