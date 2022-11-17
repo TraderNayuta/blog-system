@@ -1,5 +1,45 @@
 <div class="login">
-    <div class="login-form-container">
-        
+  <div class="login-form-container">
+    <div [formGroup]="form">
+      <mat-form-field appearance="standard">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          formControlName="username"
+          placeholder="Please input username"
+        />
+        <mat-error *ngIf="getControl('username').hasError('required')"
+          >Username is required!</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          placeholder="Please input password"
+          [type]="passwordHide ? 'password' : 'text'"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="passwordHide = !passwordHide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="passwordHide"
+        >
+          <mat-icon>{{
+            passwordHide ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+        <mat-error *ngIf="getControl('password').hasError('required')"
+          >Password is required!</mat-error
+        >
+      </mat-form-field>
+      <div class="btn-container">
+        <button mat-raised-button color="primary" (click)="login()">
+          Login
+        </button>
+      </div>
     </div>
+  </div>
 </div>
