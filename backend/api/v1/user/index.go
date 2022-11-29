@@ -2,8 +2,9 @@ package user
 
 import "github.com/gin-gonic/gin"
 
-func InitUserRouter(r *gin.RouterGroup) {
+func InitUserApi(r *gin.RouterGroup) {
 	auth := r.Group("/user")
 
-	AuthRouter(auth)
+	// 注册授权api
+	AuthApi(auth)
 }

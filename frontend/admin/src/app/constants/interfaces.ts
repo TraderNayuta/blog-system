@@ -1,5 +1,10 @@
 import { ActionTarget, ActionType, PostStatus } from './types';
 
+export interface Response {
+  data?: string | Object | Array<any>;
+  msg: string;
+}
+
 export interface Base {
   id?: string;
 }

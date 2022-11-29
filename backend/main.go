@@ -2,11 +2,16 @@ package main
 
 import (
 	"fmt"
-	"go-blog-server/router"
+	"go-blog-server/api"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	r := router.InitRouter()
+	r := gin.New()
+	r.Use(gin.Logger())
+	r.Use(gin.Recovery())
+	api.InitApi(r)
 
 	err := r.Run()
 	if err != nil {
