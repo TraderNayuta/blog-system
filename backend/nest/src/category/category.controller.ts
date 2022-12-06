@@ -1,8 +1,19 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { categoryDto } from './category.dto';
+import { CategoryService } from './category.service';
 
 @Controller('category')
 export class CategoryController {
+  constructor(private cagegoryService: CategoryService) {}
+
   @Get('query')
   queryCategoryList(): string {
     return 'query categorie list';
@@ -14,14 +25,17 @@ export class CategoryController {
     return 'create Category';
   }
 
-  @Post('update')
-  updateCategory(@Body() updateCategoryDto: categoryDto): string {
+  @Put(':id')
+  updateCategory(
+    @Param('id') id: number,
+    @Body() updateCategoryDto: categoryDto,
+  ): string {
     console.log(updateCategoryDto);
-    return 'update Category';
+    return `update Category ${id}`;
   }
 
   @Delete('delete/:id')
-  deleteCategory(@Param('id') id: string): string {
+  deleteCategory(@Param('id') id: number): string {
     return `delete Category ${id}`;
   }
 }

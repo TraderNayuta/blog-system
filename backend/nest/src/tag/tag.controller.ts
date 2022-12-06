@@ -1,8 +1,19 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { tagDto } from './tag.dto';
+import { TagService } from './tag.service';
 
 @Controller('tag')
 export class TagController {
+  constructor(private tagService: TagService) {}
+
   @Get('query')
   queryTagList(): string {
     return 'query tag list';
@@ -14,14 +25,14 @@ export class TagController {
     return 'create Tag';
   }
 
-  @Post('update')
-  updateTag(@Body() updateTagDto: tagDto): string {
+  @Put(':id')
+  updateTag(@Param('id') id: number, @Body() updateTagDto: tagDto): string {
     console.log(updateTagDto);
-    return 'update Tag';
+    return `update Tag ${id}`;
   }
 
   @Delete('delete/:id')
-  deleteTag(@Param('id') id: string): string {
+  deleteTag(@Param('id') id: number): string {
     return `delete Tag ${id}`;
   }
 }
