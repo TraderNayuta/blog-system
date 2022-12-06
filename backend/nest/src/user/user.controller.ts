@@ -7,8 +7,7 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post('login')
-  login(@Body() loginDto: LoginDto): string {
-    console.log(loginDto);
-    return 'login success!';
+  login(@Body() loginDto: LoginDto) {
+    return this.userService.login(loginDto);
   }
 }

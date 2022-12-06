@@ -1,8 +1,8 @@
-export class Base {
+export class BaseDto {
   readonly id?: string;
 }
 
-export class multiLanguageBase {
+export class multiLanguageBaseDto {
   readonly en: string;
   readonly zh: string;
 }

@@ -1,5 +1,5 @@
-import { Base, multiLanguageBase } from 'src/common.dto';
+import { BaseDto, multiLanguageBaseDto } from 'src/common.dto';
 
-export class categoryDto extends Base {
-  readonly categoryName: multiLanguageBase;
+export class categoryDto extends BaseDto {
+  readonly categoryName: multiLanguageBaseDto;
 }

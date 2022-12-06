@@ -1,10 +1,6 @@
 {
-  "name": "nest",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
-  "private": true,
-  "license": "UNLICENSED",
+  "name": "blog-nest-backend",
+  "version": "0.0.0",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -23,6 +19,7 @@
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/jwt": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/typeorm": "^9.0.1",
     "mysql2": "^2.3.3",
