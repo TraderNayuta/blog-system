@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { encryptPassword } from 'src/util/cryptogram.util';
+import { encryptPassword } from 'src/utils/cryptogram.util';
 import { Repository } from 'typeorm';
 import { LoginDto } from './user.dto';
 import { User } from './user.entity';
