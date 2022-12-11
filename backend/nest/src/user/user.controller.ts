@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Header, HttpCode, Post } from '@nestjs/common';
 import { LoginDto } from './user.dto';
 import { UserService } from './user.service';
 
@@ -7,7 +7,13 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post('login')
-  login(@Body() loginDto: LoginDto) {
-    return this.userService.login(loginDto);
+  @HttpCode(200)
+  @Header('content-type', 'text/plain')
+  async login(@Body() loginDto: LoginDto) {
+    const token = await this.userService.login(loginDto);
+    return {
+      data: token,
+      msg: 'login success!',
+    };
   }
 }

@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -16,8 +17,11 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   passwordHide: Boolean = true;
 
-  constructor(private fb: FormBuilder,
-    private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.form = this.fb.group({
       username: [null, Validators.required],
       password: [null, Validators.required],
@@ -34,12 +38,15 @@ export class LoginComponent implements OnInit {
     this.form.markAllAsTouched();
 
     if (this.form.valid) {
-      this.authService.login({
-        username: this.form.controls['username'].value,
-        password: this.form.controls['password'].value
-      }).subscribe(res => {
-        console.log(res);
-      })
+      this.authService
+        .login({
+          username: this.form.controls['username'].value,
+          password: this.form.controls['password'].value,
+        })
+        .subscribe(({ data, msg }) => {
+          localStorage.setItem('token', data as string);
+          this.router.navigateByUrl('');
+        });
     }
   }
 }

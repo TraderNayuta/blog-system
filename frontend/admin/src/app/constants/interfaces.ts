@@ -1,7 +1,7 @@
 import { ActionTarget, ActionType, PostStatus } from './types';
 
 export interface Response {
-  data?: string | Object | Array<any>;
+  data?: string | object | Array<any>;
   msg: string;
 }
 
