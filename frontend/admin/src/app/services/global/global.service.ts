@@ -9,11 +9,8 @@ import { categories, tags } from 'src/app/constants/mock';
 export class GlobalService {
   categories: BehaviorSubject<Category[]> = new BehaviorSubject(categories);
   tags: BehaviorSubject<Tag[]> = new BehaviorSubject(tags);
-  token: string;
 
-  constructor() {
-    this.token = localStorage.getItem('token');
-  }
+  constructor() {}
 
   setCategories(categories: Category[]) {
     this.categories.next(categories);
