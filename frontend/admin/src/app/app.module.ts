@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,12 +24,13 @@ import {
 } from '@angular/material/snack-bar';
 import { PostManagementComponent } from './views/post-management/post-management.component';
 import { PostComponent } from './views/post/post.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './views/login/login.component';
 import { PreviewComponent } from './views/preview/preview.component';
 import { DoubleConfirmDialogComponent } from './components/double-confirm-dialog/double-confirm-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActionDialogComponent } from './components/action-dialog/action-dialog.component';
+import { CustomInterceptor } from './interceptors/custom.interceptor';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,11 @@ import { ActionDialogComponent } from './components/action-dialog/action-dialog.
         horizontalPosition: 'center',
         verticalPosition: 'top',
       },
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomInterceptor,
+      multi: true,
     },
   ],
   bootstrap: [AppComponent],

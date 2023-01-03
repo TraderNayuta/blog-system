@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private globalService: GlobalService
   ) {
     this.form = this.fb.group({
       username: [null, Validators.required],
@@ -45,6 +47,7 @@ export class LoginComponent implements OnInit {
         })
         .subscribe(({ data, msg }) => {
           localStorage.setItem('token', data as string);
+          this.globalService.setToken(data as string);
           this.router.navigateByUrl('');
         });
     }

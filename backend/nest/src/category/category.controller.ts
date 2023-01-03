@@ -6,9 +6,11 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { categoryDto } from './category.dto';
 import { CategoryService } from './category.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('category')
 export class CategoryController {
@@ -19,12 +21,14 @@ export class CategoryController {
     return 'query categorie list';
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('create')
   createCategory(@Body() createCategoryDto: categoryDto): string {
     console.log(createCategoryDto);
     return 'create Category';
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   updateCategory(
     @Param('id') id: number,
@@ -34,6 +38,7 @@ export class CategoryController {
     return `update Category ${id}`;
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Delete('delete/:id')
   deleteCategory(@Param('id') id: number): string {
     return `delete Category ${id}`;

@@ -27,12 +27,7 @@ export class UserService {
   async checkLoginForm(loginDto: LoginDto): Promise<User> {
     const { username, password } = loginDto;
 
-    const user = await this.userRepository
-      .createQueryBuilder('user')
-      .addSelect('user.salt')
-      .addSelect('user.password')
-      .where('user.username = :username', { username })
-      .getOne();
+    const user = await this.findUser(username);
 
     if (!user) {
       throw new NotFoundException('用户不存在');
@@ -45,6 +40,15 @@ export class UserService {
     }
 
     return user;
+  }
+
+  async findUser(username: string): Promise<User | null> {
+    return this.userRepository
+      .createQueryBuilder('user')
+      .addSelect('user.salt')
+      .addSelect('user.password')
+      .where('user.username = :username', { username })
+      .getOne();
   }
 
   async certificate(user: User): Promise<string> {
