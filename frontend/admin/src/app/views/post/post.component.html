@@ -1,9 +1,9 @@
-<div class="article">
+<div class="post">
   <div class="btn-container">
-    <button mat-icon-button color="primary" aria-label="Save the article" (click)="save()">
+    <button mat-icon-button color="primary" aria-label="Save the post" (click)="save()">
       <mat-icon>save</mat-icon>
     </button>
-    <button mat-icon-button color="primary" aria-label="Preview the article" (click)="preview()">
+    <button mat-icon-button color="primary" aria-label="Preview the post" (click)="preview()">
       <mat-icon>preview</mat-icon>
     </button>
     <button mat-icon-button aria-label="Go back to previous page" (click)="goBack()">
@@ -51,7 +51,7 @@
         </div>
       </div>
       <div class="rich-text-editor-container">
-        <mat-button-toggle-group #group="matButtonToggleGroup" value="zh" name="Language" aria-label="Article language">
+        <mat-button-toggle-group #group="matButtonToggleGroup" value="zh" name="Language" aria-label="Post language">
           <mat-button-toggle value="zh">中文</mat-button-toggle>
           <mat-button-toggle value="en">English</mat-button-toggle>
         </mat-button-toggle-group>

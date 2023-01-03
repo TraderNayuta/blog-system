@@ -19,26 +19,26 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: 'articleManagement',
-        title: 'Article Management',
+        path: 'postManagement',
+        title: 'Post Management',
         component: PostManagementComponent,
       },
       {
-        path: 'createArticle',
-        title: 'Create Article',
+        path: 'createPost',
+        title: 'Create Post',
         component: PostComponent,
       },
       {
-        path: 'editArticle/:id',
-        title: 'Edit Article',
+        path: 'editPost/:id',
+        title: 'Edit Post',
         component: PostComponent,
       },
       {
-        path: 'previewArticle/:id',
-        title: 'Preview Article',
+        path: 'previewPost/:id',
+        title: 'Preview Post',
         component: PreviewComponent,
       },
-      { path: '**', redirectTo: 'articleManagement' },
+      { path: '**', redirectTo: 'postManagement' },
     ],
   },
 ];

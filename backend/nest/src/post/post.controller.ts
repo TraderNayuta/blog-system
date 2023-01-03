@@ -6,19 +6,36 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { postDto } from './post.dto';
 import { PostService } from './post.service';
 import { AuthGuard } from '@nestjs/passport';
+import { Response } from 'src/common.interface';
+import { SearchPaginatorParams } from 'src/common.dto';
 
 @Controller('post')
 export class PostController {
   constructor(private postService: PostService) {}
 
   @Get('query')
-  queryPostList(): string {
-    return 'query post List';
+  async queryPostList(
+    @Query() query: SearchPaginatorParams,
+  ): Promise<Response> {
+    const { pageSize, pageIndex } = query;
+
+    const [records, total] = await this.postService.queryPostList(query);
+
+    return {
+      data: {
+        records,
+        pageSize,
+        pageIndex,
+        total,
+      },
+      msg: 'query post list success!',
+    };
   }
 
   @Get('query/:id')

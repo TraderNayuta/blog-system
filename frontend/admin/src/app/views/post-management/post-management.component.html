@@ -1,19 +1,39 @@
-<div class="article-management">
-  <div class="btn-container">
-    <button
-      mat-raised-button
-      color="primary"
-      aria-label="Create a new article"
-      routerLink="/createArticle"
-    >
-      新增文章
-    </button>
+<div class="post-management">
+  <div class="header-operation">
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input
+        matInput
+        [(ngModel)]="searchString"
+        (keyup.enter)="applyFilter()"
+        placeholder="输入文章标题"
+      />
+      <button
+        *ngIf="searchString"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="searchString = ''"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <div class="btn-container">
+      <button
+        mat-raised-button
+        color="primary"
+        aria-label="Create a new post"
+        routerLink="/createPost"
+      >
+        新增文章
+      </button>
+    </div>
   </div>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef>标题</th>
       <td mat-cell *matCellDef="let element">
-        <a class="article-link" [routerLink]="['/editArticle', element.id]">
+        <a class="post-link" [routerLink]="['/editPost', element.id]">
           {{ element.title }}
         </a>
       </td>
@@ -47,22 +67,22 @@
         <button
           mat-icon-button
           color="primary"
-          aria-label="Edit this article"
-          [routerLink]="['/editArticle', element.id]"
+          aria-label="Edit this post"
+          [routerLink]="['/editPost', element.id]"
         >
           <mat-icon>edit</mat-icon>
         </button>
         <button
           mat-icon-button
-          aria-label="Preview this article"
-          [routerLink]="['/previewArticle', element.id]"
+          aria-label="Preview this post"
+          [routerLink]="['/previewPost', element.id]"
         >
           <mat-icon>preview</mat-icon>
         </button>
         <button
           mat-icon-button
           color="accent"
-          aria-label="Publish this article"
+          aria-label="Publish this post"
           [disabled]="element.status !== 'draft'"
           (click)="openDialog('Publish', element)"
         >
@@ -71,7 +91,7 @@
         <button
           mat-icon-button
           color="warn"
-          aria-label="Delete this article"
+          aria-label="Delete this post"
           (click)="openDialog('Publish', element)"
         >
           <mat-icon>delete</mat-icon>
@@ -85,7 +105,8 @@
   <mat-paginator
     [pageSizeOptions]="[10]"
     showFirstLastButtons
-    aria-label="Select page of article elements"
+    aria-label="Select page of post elements"
+    (page)="pageChange($event)"
   >
   </mat-paginator>
 </div>

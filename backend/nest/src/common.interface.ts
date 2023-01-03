@@ -1,4 +1,11 @@
 export interface Response {
-  data?: string | object | Array<any>;
+  data?:
+    | string
+    | {
+        records: Array<any>;
+        pageSize: number;
+        pageIndex: number;
+        total: number;
+      };
   msg: string;
 }

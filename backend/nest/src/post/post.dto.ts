@@ -1,7 +1,10 @@
 import { BaseDto } from 'src/common.dto';
 
-export class postDto extends BaseDto {
-  title: string;
+export class PostDto extends BaseDto {
+  title: {
+    zh: string;
+    en: string;
+  };
   content: string;
   categoryIdList: string[];
   tagIdList: string[];

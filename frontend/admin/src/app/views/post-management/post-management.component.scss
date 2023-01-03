@@ -1,11 +1,21 @@
-.article-management {
+.post-management {
   height: 100%;
   overflow: auto;
+
+  .header-operation {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+
+    mat-form-field {
+      flex: 1;
+    }
+  }
 
   .mat-table {
     width: 100%;
 
-    .article-link {
+    .post-link {
       color: #3f51b5;
       text-decoration: none;
     }

@@ -28,7 +28,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './views/login/login.component';
 import { PreviewComponent } from './views/preview/preview.component';
 import { DoubleConfirmDialogComponent } from './components/double-confirm-dialog/double-confirm-dialog.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActionDialogComponent } from './components/action-dialog/action-dialog.component';
 import { CustomInterceptor } from './interceptors/custom.interceptor';
 
@@ -48,6 +48,7 @@ import { CustomInterceptor } from './interceptors/custom.interceptor';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
     ReactiveFormsModule,
     CKEditorModule,
     MatToolbarModule,

@@ -1,5 +1,5 @@
-import { BaseDto, multiLanguageBaseDto } from 'src/common.dto';
+import { BaseDto, MultiLanguageBaseDto } from 'src/common.dto';
 
 export class tagDto extends BaseDto {
-  readonly tagName: multiLanguageBaseDto;
+  readonly tagName: MultiLanguageBaseDto;
 }

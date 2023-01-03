@@ -3,12 +3,12 @@
     <button
       mat-icon-button
       color="primary"
-      aria-label="Edit the article"
-      [routerLink]="['/editArticle', articleId]"
+      aria-label="Edit the post"
+      [routerLink]="['/editPost', postId]"
     >
       <mat-icon>edit</mat-icon>
     </button>
-    <button mat-icon-button color="primary" aria-label="Publish the article">
+    <button mat-icon-button color="primary" aria-label="Publish the post">
       <mat-icon>publish</mat-icon>
     </button>
     <button
@@ -19,7 +19,7 @@
       <mat-icon>arrow_back</mat-icon>
     </button>
   </div>
-  <div class="article-container">
-    <div [outerHTML]="articleContent"></div>
+  <div class="post-container">
+    <div [outerHTML]="postContent"></div>
   </div>
 </div>

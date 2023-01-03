@@ -1,17 +1,17 @@
 import Head from "next/head";
 import styles from "../../styles/Home.module.css";
 
-export default function Article() {
+export default function Post() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Article</title>
-        <meta name="description" content="Article Content" />
+        <title>Post</title>
+        <meta name="description" content="Post Content" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Article</h1>
+        <h1 className={styles.title}>Post</h1>
       </main>
     </div>
   );

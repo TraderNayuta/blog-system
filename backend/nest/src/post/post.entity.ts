@@ -12,7 +12,10 @@ export class Post {
   id: number;
 
   @Column()
-  title: string;
+  zhTitle: string;
+
+  @Column()
+  enTitle: string;
 
   @Column()
   tags: string;

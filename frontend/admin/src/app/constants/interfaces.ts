@@ -1,7 +1,14 @@
 import { ActionTarget, ActionType, PostStatus } from './types';
 
 export interface Response {
-  data?: string | object | Array<any>;
+  data?:
+    | string
+    | {
+        records: Array<any>;
+        pageSize: number;
+        pageIndex: number;
+        total: number;
+      };
   msg: string;
 }
 
@@ -10,7 +17,10 @@ export interface Base {
 }
 
 export interface Post extends Base {
-  title: string;
+  title: {
+    zh: string;
+    en: string;
+  };
   tags: Tag[];
   categories: Category[];
   content: {
@@ -42,4 +52,10 @@ export interface DoubleConfirmDialogData {
 export interface AddDialogData {
   actionType: ActionType;
   type: ActionTarget;
+}
+
+export interface SearchPaginatorParams {
+  searchString?: string;
+  pageSize: number;
+  pageIndex: number;
 }

@@ -23,7 +23,7 @@ import Editor from '../../../../ckeditor5/build/ckeditor.js';
 export class PostComponent implements OnInit {
   public Editor = Editor;
 
-  articleId: string;
+  postId: string;
   form: FormGroup;
   categories: Category[];
   tags: Tag[];
@@ -38,7 +38,7 @@ export class PostComponent implements OnInit {
     public dialog: MatDialog
   ) {
     this.routerInfo.params.subscribe((params) => {
-      this.articleId = params['id'];
+      this.postId = params['id'];
     });
 
     this.form = this.fb.group({
@@ -89,7 +89,7 @@ export class PostComponent implements OnInit {
       // If form changes has not been saved
       this.snackBar.open('您有更改尚未保存，请保存后再预览！');
     } else {
-      // this.router.navigateByUrl(`/previewArticle/${this.articleId}`)
+      // this.router.navigateByUrl(`/previewPost/${this.postId}`)
     }
   }
 
