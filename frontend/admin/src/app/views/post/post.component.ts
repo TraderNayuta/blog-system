@@ -16,6 +16,7 @@ import { ActionDialogComponent } from 'src/app/components/action-dialog/action-d
 import Editor from '../../../../ckeditor5/build/ckeditor.js';
 import { TagService } from 'src/app/services/tag/tag.service';
 import { DoubleConfirmDialogComponent } from 'src/app/components/double-confirm-dialog/double-confirm-dialog.component';
+import { CategoryService } from 'src/app/services/category/category.service';
 
 @Component({
   selector: 'app-post',
@@ -39,6 +40,17 @@ export class PostComponent implements OnInit {
       : '';
   }
 
+  get categoriesDiaplay(): string {
+    return this.form.controls['categories'].value
+      ? this.categories
+          .filter((category) =>
+            this.form.controls['categories'].value.includes(category.id)
+          )
+          .map((category) => category.zh)
+          .join(',')
+      : '';
+  }
+
   constructor(
     private globalService: GlobalService,
     private routerInfo: ActivatedRoute,
@@ -47,7 +59,8 @@ export class PostComponent implements OnInit {
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
-    private tagService: TagService
+    private tagService: TagService,
+    private categoryService: CategoryService
   ) {
     this.routerInfo.params.subscribe((params) => {
       this.postId = params['id'];
@@ -73,6 +86,7 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     this.queryTagList();
+    this.queryCategoryList();
   }
 
   goBack() {
@@ -126,7 +140,7 @@ export class PostComponent implements OnInit {
         if (target === 'tag') {
           this.queryTagList();
         } else {
-          // ...
+          this.queryCategoryList();
         }
       }
     });
@@ -153,9 +167,15 @@ export class PostComponent implements OnInit {
     });
   }
 
-  queryTagList() {
+  queryTagList(): void {
     this.tagService.queryTagList().subscribe((res) => {
       this.globalService.setTags(res.data.records);
+    });
+  }
+
+  queryCategoryList(): void {
+    this.categoryService.queryCategoryList().subscribe((res) => {
+      this.globalService.setCategories(res.data.records);
     });
   }
 
@@ -170,6 +190,9 @@ export class PostComponent implements OnInit {
         this.queryTagList();
       });
     } else {
+      this.categoryService.deleteCategory(id).subscribe((res) => {
+        this.queryCategoryList();
+      });
     }
   }
 }

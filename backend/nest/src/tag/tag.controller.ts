@@ -37,7 +37,7 @@ export class TagController {
     await this.tagService.createTag(createTagDto);
     return {
       data: null,
-      msg: 'success!',
+      msg: 'create success!',
     };
   }
 

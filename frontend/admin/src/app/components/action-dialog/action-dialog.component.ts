@@ -59,10 +59,19 @@ export class ActionDialogComponent implements OnInit {
           .subscribe((res) => {
             this.dialogRef.close(true);
           });
-        // ...
       }
     } else {
-      // ...
+      if (this.data.actionType === 'Add') {
+        this.categoryService.createCategory(params).subscribe((res) => {
+          this.dialogRef.close(true);
+        });
+      } else {
+        this.categoryService
+          .updateCategory(this.data.entity.id, params)
+          .subscribe((res) => {
+            this.dialogRef.close(true);
+          });
+      }
     }
   }
 

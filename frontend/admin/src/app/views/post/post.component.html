@@ -53,11 +53,28 @@
           <mat-form-field appearance="standard">
             <mat-label>Category</mat-label>
             <mat-select multiple formControlName="categories">
+              <mat-select-trigger>
+                {{ categoriesDiaplay }}
+              </mat-select-trigger>
               <mat-option
                 *ngFor="let category of categories"
                 [value]="category.id"
-                >{{ category.zh }}</mat-option
               >
+                <div class="select-option-content">
+                  {{ category.zh }} - {{ category.en }}
+                  <span class="action-container">
+                    <mat-icon (click)="editEntity($event, 'category', category)"
+                      >edit</mat-icon
+                    >
+                    <mat-icon
+                      (click)="
+                        openDoubleConfirmDialog($event, 'category', category)
+                      "
+                      >delete</mat-icon
+                    >
+                  </span>
+                </div>
+              </mat-option>
             </mat-select>
             <mat-error *ngIf="getControl('categories').hasError('required')"
               >Category is required!</mat-error
