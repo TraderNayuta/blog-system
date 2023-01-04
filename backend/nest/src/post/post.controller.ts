@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Post,
   Put,
@@ -20,6 +21,7 @@ export class PostController {
   constructor(private postService: PostService) {}
 
   @Get('query')
+  @HttpCode(200)
   async queryPostList(
     @Query() query: SearchPaginatorParams,
   ): Promise<Response> {
@@ -39,6 +41,7 @@ export class PostController {
   }
 
   @Get('query/:id')
+  @HttpCode(200)
   queryPostById(@Param('id') id: number): string {
     console.log(id);
     return 'query post by id';
@@ -46,13 +49,18 @@ export class PostController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('create')
-  createPost(@Body() createPostDto: PostDto): string {
-    console.log(createPostDto);
-    return 'create post';
+  @HttpCode(200)
+  async createPost(@Body() createPostDto: PostDto): Promise<Response> {
+    const post = await this.postService.createPost(createPostDto);
+    return {
+      data: post.identifiers[0].id,
+      msg: 'create success!',
+    };
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Put(':id')
+  @HttpCode(200)
   updatePost(@Param('id') id: number, @Body() updatePostDto: PostDto): string {
     console.log(updatePostDto);
     return `update post ${id}`;
@@ -60,6 +68,7 @@ export class PostController {
 
   @UseGuards(AuthGuard('jwt'))
   @Delete('delete/:id')
+  @HttpCode(200)
   deletePost(@Param('id') id: number): string {
     return `delete post ${id}`;
   }

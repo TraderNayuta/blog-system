@@ -1,7 +1,11 @@
+import { Category } from 'src/category/category.entity';
+import { Tag } from 'src/tag/tag.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -17,14 +21,19 @@ export class Post {
   @Column()
   enTitle: string;
 
-  @Column()
-  tags: string;
+  @ManyToMany(() => Tag, (tag) => tag.posts)
+  @JoinTable()
+  tags: Tag[];
+
+  @ManyToMany(() => Category, (category) => category.posts)
+  @JoinTable()
+  categories: Category[];
 
   @Column()
-  categories: string;
+  zhContent: string;
 
   @Column()
-  content: string;
+  enContent: string;
 
   @CreateDateColumn()
   createTime?: Date;

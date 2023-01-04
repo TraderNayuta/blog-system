@@ -29,19 +29,35 @@ export class PostService {
   }
 
   async createPost(createPostDto: PostDto): Promise<InsertResult> {
-    return this.postRepository
+    // need transactions: need to update typeorm to use latest best practice DataSource
+    const post = await this.postRepository
       .createQueryBuilder()
       .insert()
       .into(Post)
       .values([
         {
-          zhTitle: createPostDto.title.zh,
-          enTitle: createPostDto.title.en,
-          content: createPostDto.content,
-          tags: createPostDto.tagIdList.join(','),
-          categories: createPostDto.categoryIdList.join(','),
+          zhTitle: createPostDto.zhTitle,
+          enTitle: createPostDto.enTitle,
+          zhContent: createPostDto.zhContent,
+          enContent: createPostDto.enContent,
         },
       ])
       .execute();
+
+    const postId = post.identifiers[0].id;
+
+    await this.postRepository
+      .createQueryBuilder()
+      .relation(Post, 'tags')
+      .of(postId)
+      .add(createPostDto.tags);
+
+    await this.postRepository
+      .createQueryBuilder()
+      .relation(Post, 'categories')
+      .of(postId)
+      .add(createPostDto.categories);
+
+    return post;
   }
 }

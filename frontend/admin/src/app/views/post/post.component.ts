@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { GlobalService } from 'src/app/services/global/global.service';
-import { Category, Tag } from 'src/app/constants/interfaces';
+import { Category, Post, Tag } from 'src/app/constants/interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ActionTarget, ActionType } from 'src/app/constants/types';
@@ -17,6 +17,7 @@ import Editor from '../../../../ckeditor5/build/ckeditor.js';
 import { TagService } from 'src/app/services/tag/tag.service';
 import { DoubleConfirmDialogComponent } from 'src/app/components/double-confirm-dialog/double-confirm-dialog.component';
 import { CategoryService } from 'src/app/services/category/category.service';
+import { PostService } from 'src/app/services/post/post.service';
 
 @Component({
   selector: 'app-post',
@@ -26,7 +27,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
 export class PostComponent implements OnInit {
   public Editor = Editor;
 
-  postId: string;
+  postId: number;
   form: FormGroup;
   categories: Category[];
   tags: Tag[];
@@ -60,10 +61,11 @@ export class PostComponent implements OnInit {
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
     private tagService: TagService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private postService: PostService
   ) {
     this.routerInfo.params.subscribe((params) => {
-      this.postId = params['id'];
+      this.postId = parseInt(params['id']);
     });
 
     this.form = this.fb.group({
@@ -87,6 +89,17 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
     this.queryTagList();
     this.queryCategoryList();
+
+    if (this.postId) {
+      // If there is postId, need to request to query post detail
+      this.queryPostDetail(this.postId);
+    }
+  }
+
+  queryPostDetail(postId: number) {
+    this.postService.queryPostDetail(postId).subscribe((res) => {
+      // 设置 form 内容
+    });
   }
 
   goBack() {
@@ -103,12 +116,30 @@ export class PostComponent implements OnInit {
   }
 
   save(): void {
-    console.log(this.form.controls['zhContent'].value);
     this.formValidate();
 
     if (this.form.valid) {
-      // 保存成功后将 form 置为未变更状态，否则预览时无法判断是否有未变更的提交
-      this.form.markAsUntouched();
+      const params: Post = {
+        zhTitle: this.form.controls['zhTitle'].value,
+        enTitle: this.form.controls['enTitle'].value,
+        categories: this.form.controls['categories'].value,
+        tags: this.form.controls['tags'].value,
+        zhContent: this.form.controls['zhContent'].value,
+        enContent: this.form.controls['enContent'].value,
+        status: 'draft',
+      };
+
+      if (this.postId) {
+        this.postService.updatePost(this.postId, params).subscribe((res) => {
+          // Mark the form as untouched after successfully saving, otherwise when click preview it will not be able to judge whether the form has unsaved changes.
+          this.form.markAllAsTouched();
+        });
+      } else {
+        this.postService.createPost(params).subscribe((res) => {
+          this.postId = res.data;
+          this.form.markAllAsTouched();
+        });
+      }
     }
   }
 
@@ -117,7 +148,7 @@ export class PostComponent implements OnInit {
       // If form changes has not been saved
       this.snackBar.open('您有更改尚未保存，请保存后再预览！');
     } else {
-      // this.router.navigateByUrl(`/previewPost/${this.postId}`)
+      this.router.navigateByUrl(`/previewPost/${this.postId}`);
     }
   }
 
@@ -167,15 +198,33 @@ export class PostComponent implements OnInit {
     });
   }
 
-  queryTagList(): void {
+  queryTagList(updateForm = false): void {
     this.tagService.queryTagList().subscribe((res) => {
       this.globalService.setTags(res.data.records);
+
+      if (updateForm) {
+        this.form.controls['tags'].setValue(
+          this.form.controls['tags'].value.filter((tagId: number) =>
+            this.tags.some((tag: Tag) => tag.id === tagId)
+          )
+        );
+      }
     });
   }
 
-  queryCategoryList(): void {
+  queryCategoryList(updateForm = false): void {
     this.categoryService.queryCategoryList().subscribe((res) => {
       this.globalService.setCategories(res.data.records);
+
+      if (updateForm) {
+        this.form.controls['categories'].setValue(
+          this.form.controls['categories'].value.filter((categoryId: number) =>
+            this.categories.some(
+              (category: Category) => category.id === categoryId
+            )
+          )
+        );
+      }
     });
   }
 
@@ -187,11 +236,11 @@ export class PostComponent implements OnInit {
   deleteEntity(target: ActionTarget, id: number): void {
     if (target === 'tag') {
       this.tagService.deleteTag(id).subscribe((res) => {
-        this.queryTagList();
+        this.queryTagList(true);
       });
     } else {
       this.categoryService.deleteCategory(id).subscribe((res) => {
-        this.queryCategoryList();
+        this.queryCategoryList(true);
       });
     }
   }

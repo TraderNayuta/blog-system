@@ -7,5 +7,5 @@ export const OrmConfig: MysqlConnectionOptions = {
   username: 'root',
   password: '123456',
   database: 'blog',
-  synchronize: true,
+  synchronize: true
 };

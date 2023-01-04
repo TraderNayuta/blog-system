@@ -60,7 +60,7 @@ export class PostManagementComponent implements OnInit, AfterViewInit {
       data: {
         header: `${type} Post`,
         content: `Are you sure to ${type.toLowerCase()} this post: ${
-          post.title
+          post.zhTitle
         }`,
       },
     });
