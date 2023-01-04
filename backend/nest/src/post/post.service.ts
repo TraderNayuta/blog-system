@@ -28,6 +28,15 @@ export class PostService {
     // return this.postRepository.createQueryBuilder('post').getManyAndCount();
   }
 
+  async queryPostById(id: number): Promise<Post> {
+    return this.postRepository
+      .createQueryBuilder('post')
+      .leftJoinAndSelect('post.categories', 'category')
+      .leftJoinAndSelect('post.tags', 'tag')
+      .where('post.id = :id', { id })
+      .getOne();
+  }
+
   async createPost(createPostDto: PostDto): Promise<InsertResult> {
     // need transactions: need to update typeorm to use latest best practice DataSource
     const post = await this.postRepository

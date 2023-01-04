@@ -44,9 +44,13 @@ export class PostController {
 
   @Get('query/:id')
   @HttpCode(200)
-  queryPostById(@Param('id') id: number): string {
-    console.log(id);
-    return 'query post by id';
+  async queryPostById(@Param('id') id: number): Promise<Response> {
+    const post = await this.postService.queryPostById(id);
+    console.log(post);
+    return {
+      data: post,
+      msg: 'query post detail success!',
+    };
   }
 
   @UseGuards(AuthGuard('jwt'))

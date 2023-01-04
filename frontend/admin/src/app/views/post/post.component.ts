@@ -87,12 +87,11 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.categories);
-    if (!this.categories || this.categories.length === 0) {
+    if (this.categories.length === 0) {
       this.queryCategoryList();
     }
 
-    if (!this.tags || this.tags.length === 0) {
+    if (this.tags.length === 0) {
       this.queryTagList();
     }
 
@@ -104,7 +103,20 @@ export class PostComponent implements OnInit {
 
   queryPostDetail(postId: number) {
     this.postService.queryPostDetail(postId).subscribe((res) => {
-      // 设置 form 内容
+      // set form data
+      for (let control in this.form.controls) {
+        if (control === 'tags') {
+          this.form.controls[control].setValue(
+            res.data.tags.map((tag: Tag) => tag.id)
+          );
+        } else if (control === 'categories') {
+          this.form.controls[control].setValue(
+            res.data.categories.map((category: Category) => category.id)
+          );
+        } else {
+          this.form.controls[control].setValue(res.data[control]);
+        }
+      }
     });
   }
 
