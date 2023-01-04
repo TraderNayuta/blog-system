@@ -63,9 +63,15 @@ export class PostController {
   @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @HttpCode(200)
-  updatePost(@Param('id') id: number, @Body() updatePostDto: PostDto): string {
-    console.log(updatePostDto);
-    return `update post ${id}`;
+  async updatePost(
+    @Param('id') id: number,
+    @Body() updatePostDto: PostDto,
+  ): Promise<Response> {
+    await this.postService.updatePost(id, updatePostDto);
+    return {
+      data: null,
+      msg: 'update success!',
+    };
   }
 
   @UseGuards(AuthGuard('jwt'))

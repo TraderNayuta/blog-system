@@ -87,8 +87,14 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.queryTagList();
-    this.queryCategoryList();
+    console.log(this.categories);
+    if (!this.categories || this.categories.length === 0) {
+      this.queryCategoryList();
+    }
+
+    if (!this.tags || this.tags.length === 0) {
+      this.queryTagList();
+    }
 
     if (this.postId) {
       // If there is postId, need to request to query post detail

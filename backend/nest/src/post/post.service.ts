@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Post } from './post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, InsertResult, Repository } from 'typeorm';
+import { DeleteResult, InsertResult, Repository, UpdateResult } from 'typeorm';
 import { SearchPaginatorParams } from 'src/common.dto';
 import { PostDto } from './post.dto';
 
@@ -18,7 +18,9 @@ export class PostService {
     const { searchString, pageSize, pageIndex } = queryParams;
 
     return this.postRepository
-      .createQueryBuilder()
+      .createQueryBuilder('post')
+      .leftJoinAndSelect('post.categories', 'category')
+      .leftJoinAndSelect('post.tags', 'tag')
       .skip(parseInt(pageSize) * parseInt(pageIndex))
       .take(parseInt(pageSize))
       .getManyAndCount();
@@ -60,12 +62,56 @@ export class PostService {
     return post;
   }
 
-  async deletePost(postId: number): Promise<DeleteResult> {
+  async updatePost(id: number, updatePostDto: PostDto): Promise<UpdateResult> {
+    const params = { ...updatePostDto };
+    for (const key in params) {
+      if (!!params[key]) {
+        delete params[key];
+      }
+    }
+
+    if (updatePostDto.tags) {
+      const currentTags = await this.postRepository
+        .createQueryBuilder()
+        .relation(Post, 'tags')
+        .of(id)
+        .loadMany();
+
+      await this.postRepository
+        .createQueryBuilder()
+        .relation(Post, 'tags')
+        .of(id)
+        .addAndRemove(updatePostDto.tags, currentTags);
+    }
+
+    if (updatePostDto.categories) {
+      const currentCategories = await this.postRepository
+        .createQueryBuilder()
+        .relation(Post, 'categories')
+        .of(id)
+        .loadMany();
+
+      await this.postRepository
+        .createQueryBuilder()
+        .relation(Post, 'categories')
+        .of(id)
+        .addAndRemove(updatePostDto.categories, currentCategories);
+    }
+
+    return this.postRepository
+      .createQueryBuilder()
+      .update(Post)
+      .set({ ...params } as any)
+      .where('id = :id', { id })
+      .execute();
+  }
+
+  async deletePost(id: number): Promise<DeleteResult> {
     return await this.postRepository
       .createQueryBuilder()
       .delete()
       .from('Post')
-      .where('id = :id', { id: postId })
+      .where('id = :id', { id })
       .execute();
   }
 }
