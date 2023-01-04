@@ -11,9 +11,11 @@ import { GlobalService } from 'src/app/services/global/global.service';
 import { Category, Tag } from 'src/app/constants/interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { ActionTarget } from 'src/app/constants/types';
+import { ActionTarget, ActionType } from 'src/app/constants/types';
 import { ActionDialogComponent } from 'src/app/components/action-dialog/action-dialog.component';
 import Editor from '../../../../ckeditor5/build/ckeditor.js';
+import { TagService } from 'src/app/services/tag/tag.service';
+import { DoubleConfirmDialogComponent } from 'src/app/components/double-confirm-dialog/double-confirm-dialog.component';
 
 @Component({
   selector: 'app-post',
@@ -28,6 +30,15 @@ export class PostComponent implements OnInit {
   categories: Category[];
   tags: Tag[];
 
+  get tagsDiaplay(): string {
+    return this.form.controls['tags'].value
+      ? this.tags
+          .filter((tag) => this.form.controls['tags'].value.includes(tag.id))
+          .map((tag) => tag.zh)
+          .join(',')
+      : '';
+  }
+
   constructor(
     private globalService: GlobalService,
     private routerInfo: ActivatedRoute,
@@ -35,7 +46,8 @@ export class PostComponent implements OnInit {
     private location: Location,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private tagService: TagService
   ) {
     this.routerInfo.params.subscribe((params) => {
       this.postId = params['id'];
@@ -59,7 +71,9 @@ export class PostComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.queryTagList();
+  }
 
   goBack() {
     this.location.back();
@@ -93,13 +107,69 @@ export class PostComponent implements OnInit {
     }
   }
 
-  openAddDialog(type: ActionTarget): void {
-    this.dialog.open(ActionDialogComponent, {
+  openActionDialog(
+    actionType: ActionType,
+    target: ActionTarget,
+    entity?: Tag | Category
+  ): void {
+    const dialogRef = this.dialog.open(ActionDialogComponent, {
       width: '400px',
       data: {
-        actionType: 'Add',
-        type,
+        actionType,
+        target,
+        entity,
       },
     });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        if (target === 'tag') {
+          this.queryTagList();
+        } else {
+          // ...
+        }
+      }
+    });
+  }
+
+  openDoubleConfirmDialog(
+    e: MouseEvent,
+    target: ActionTarget,
+    entity: Tag | Category
+  ): void {
+    e.stopPropagation();
+    const dialogRef = this.dialog.open(DoubleConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        header: `Delete ${target}`,
+        content: `Are you sure to delete this ${target}: ${entity.zh}`,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.deleteEntity(target, entity.id);
+      }
+    });
+  }
+
+  queryTagList() {
+    this.tagService.queryTagList().subscribe((res) => {
+      this.globalService.setTags(res.data.records);
+    });
+  }
+
+  editEntity(e: MouseEvent, target: ActionTarget, entity: Tag | Category) {
+    e.stopPropagation();
+    this.openActionDialog('Edit', target, entity);
+  }
+
+  deleteEntity(target: ActionTarget, id: number): void {
+    if (target === 'tag') {
+      this.tagService.deleteTag(id).subscribe((res) => {
+        this.queryTagList();
+      });
+    } else {
+    }
   }
 }

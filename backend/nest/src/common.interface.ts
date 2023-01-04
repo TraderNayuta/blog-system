@@ -3,9 +3,9 @@ export interface Response {
     | string
     | {
         records: Array<any>;
-        pageSize: number;
-        pageIndex: number;
-        total: number;
+        pageSize?: number;
+        pageIndex?: number;
+        total?: number;
       };
   msg: string;
 }

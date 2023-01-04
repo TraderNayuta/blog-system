@@ -19,7 +19,9 @@ export class PostService {
 
     return this.postRepository
       .createQueryBuilder('post')
-      .where('post.title LIKE :searchString')
+      .where(
+        'post.zhTitle LIKE :searchString OR post.enTitle LIKE :searchString',
+      )
       .setParameters({ searchString })
       .skip(pageSize * pageIndex)
       .take(pageSize)

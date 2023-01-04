@@ -74,11 +74,11 @@ export class PostManagementComponent implements OnInit, AfterViewInit {
     });
   }
 
-  publishPost(postId: string): void {
+  publishPost(postId: number): void {
     // 发布文章
   }
 
-  deletePost(postId: string): void {
+  deletePost(postId: number): void {
     // 删除文章
   }
 }

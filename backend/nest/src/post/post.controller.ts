@@ -9,7 +9,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { postDto } from './post.dto';
+import { PostDto } from './post.dto';
 import { PostService } from './post.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'src/common.interface';
@@ -46,14 +46,14 @@ export class PostController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('create')
-  createPost(@Body() createPostDto: postDto): string {
+  createPost(@Body() createPostDto: PostDto): string {
     console.log(createPostDto);
     return 'create post';
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Put(':id')
-  updatePost(@Param('id') id: number, @Body() updatePostDto: postDto): string {
+  updatePost(@Param('id') id: number, @Body() updatePostDto: PostDto): string {
     console.log(updatePostDto);
     return `update post ${id}`;
   }

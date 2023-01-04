@@ -1,12 +1,26 @@
 <div class="post">
   <div class="btn-container">
-    <button mat-icon-button color="primary" aria-label="Save the post" (click)="save()">
+    <button
+      mat-icon-button
+      color="primary"
+      aria-label="Save the post"
+      (click)="save()"
+    >
       <mat-icon>save</mat-icon>
     </button>
-    <button mat-icon-button color="primary" aria-label="Preview the post" (click)="preview()">
+    <button
+      mat-icon-button
+      color="primary"
+      aria-label="Preview the post"
+      (click)="preview()"
+    >
       <mat-icon>preview</mat-icon>
     </button>
-    <button mat-icon-button aria-label="Go back to previous page" (click)="goBack()">
+    <button
+      mat-icon-button
+      aria-label="Go back to previous page"
+      (click)="goBack()"
+    >
       <mat-icon>arrow_back</mat-icon>
     </button>
   </div>
@@ -15,49 +29,108 @@
       <div class="basic-form-fields">
         <mat-form-field appearance="standard">
           <mat-label>Chinese title</mat-label>
-          <input matInput formControlName="zhTitle" placeholder="Chinese title" />
-          <mat-error *ngIf="getControl('zhTitle').hasError('required')">Chinese title is required!</mat-error>
+          <input
+            matInput
+            formControlName="zhTitle"
+            placeholder="Chinese title"
+          />
+          <mat-error *ngIf="getControl('zhTitle').hasError('required')"
+            >Chinese title is required!</mat-error
+          >
         </mat-form-field>
         <mat-form-field appearance="standard">
           <mat-label>English title</mat-label>
-          <input matInput formControlName="enTitle" placeholder="English title" />
-          <mat-error *ngIf="getControl('enTitle').hasError('required')">English title is required!</mat-error>
+          <input
+            matInput
+            formControlName="enTitle"
+            placeholder="English title"
+          />
+          <mat-error *ngIf="getControl('enTitle').hasError('required')"
+            >English title is required!</mat-error
+          >
         </mat-form-field>
         <div class="form-field-with-btn">
           <mat-form-field appearance="standard">
             <mat-label>Category</mat-label>
             <mat-select multiple formControlName="categories">
-              <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.name.zh }}</mat-option>
+              <mat-option
+                *ngFor="let category of categories"
+                [value]="category.id"
+                >{{ category.zh }}</mat-option
+              >
             </mat-select>
-            <mat-error *ngIf="getControl('categories').hasError('required')">Category is required!</mat-error>
+            <mat-error *ngIf="getControl('categories').hasError('required')"
+              >Category is required!</mat-error
+            >
           </mat-form-field>
-          <button mat-mini-fab color="primary" aria-label="Add a category" (click)="openAddDialog('category')">
+          <button
+            mat-mini-fab
+            color="primary"
+            aria-label="Add a category"
+            (click)="openActionDialog('Add', 'category')"
+          >
             <mat-icon>add</mat-icon>
           </button>
         </div>
         <div class="form-field-with-btn">
           <mat-form-field appearance="standard">
             <mat-label>Tag</mat-label>
-            <mat-select multiple formControlName="tags">
-              <mat-option *ngFor="let tag of tags" [value]="tag.id">{{
-                tag.name.zh
-                }}</mat-option>
+            <mat-select multiple formControlName="tags" #tagSelect>
+              <mat-select-trigger>
+                {{ tagsDiaplay }}
+              </mat-select-trigger>
+              <mat-option *ngFor="let tag of tags" [value]="tag.id">
+                <div class="select-option-content">
+                  {{ tag.zh }} - {{ tag.en }}
+                  <span class="action-container">
+                    <mat-icon (click)="editEntity($event, 'tag', tag)"
+                      >edit</mat-icon
+                    >
+                    <mat-icon
+                      (click)="openDoubleConfirmDialog($event, 'tag', tag)"
+                      >delete</mat-icon
+                    >
+                  </span>
+                </div>
+              </mat-option>
             </mat-select>
-            <mat-error *ngIf="getControl('tags').hasError('required')">Tag is required!</mat-error>
+            <mat-error *ngIf="getControl('tags').hasError('required')"
+              >Tag is required!</mat-error
+            >
           </mat-form-field>
-          <button mat-mini-fab color="primary" aria-label="Add a tag" (click)="openAddDialog('tag')">
+          <button
+            mat-mini-fab
+            color="primary"
+            aria-label="Add a tag"
+            (click)="openActionDialog('Add', 'tag')"
+          >
             <mat-icon>add</mat-icon>
           </button>
         </div>
       </div>
       <div class="rich-text-editor-container">
-        <mat-button-toggle-group #group="matButtonToggleGroup" value="zh" name="Language" aria-label="Post language">
+        <mat-button-toggle-group
+          #group="matButtonToggleGroup"
+          value="zh"
+          name="Language"
+          aria-label="Post language"
+        >
           <mat-button-toggle value="zh">中文</mat-button-toggle>
           <mat-button-toggle value="en">English</mat-button-toggle>
         </mat-button-toggle-group>
-        <ckeditor class="content-editor" [hidden]="group.value === 'en'" [editor]="Editor" formControlName="zhContent">
+        <ckeditor
+          class="content-editor"
+          [hidden]="group.value === 'en'"
+          [editor]="Editor"
+          formControlName="zhContent"
+        >
         </ckeditor>
-        <ckeditor class="content-editor" [hidden]="group.value === 'zh'" [editor]="Editor" formControlName="enContent">
+        <ckeditor
+          class="content-editor"
+          [hidden]="group.value === 'zh'"
+          [editor]="Editor"
+          formControlName="enContent"
+        >
         </ckeditor>
       </div>
     </div>

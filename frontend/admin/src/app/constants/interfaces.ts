@@ -13,7 +13,7 @@ export interface Response {
 }
 
 export interface Base {
-  id?: string;
+  id?: number;
 }
 
 export interface Post extends Base {
@@ -31,17 +31,13 @@ export interface Post extends Base {
 }
 
 export interface Tag extends Base {
-  name: {
-    zh: string;
-    en: string;
-  };
+  zh: string;
+  en: string;
 }
 
 export interface Category extends Base {
-  name: {
-    zh: string;
-    en: string;
-  };
+  zh: string;
+  en: string;
 }
 
 export interface DoubleConfirmDialogData {
@@ -49,9 +45,10 @@ export interface DoubleConfirmDialogData {
   content: string;
 }
 
-export interface AddDialogData {
+export interface ActionDialogData {
   actionType: ActionType;
-  type: ActionTarget;
+  target: ActionTarget;
+  entity?: Tag | Category;
 }
 
 export interface SearchPaginatorParams {

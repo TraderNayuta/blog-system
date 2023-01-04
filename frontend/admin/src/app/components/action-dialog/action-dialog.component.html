@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{ data.actionType }} {{ data.type }}</h1>
+<h1 mat-dialog-title>{{ data.actionType }} {{ data.target }}</h1>
 <div mat-dialog-content>
   <div [formGroup]="form">
     <mat-form-field appearance="standard">
@@ -27,12 +27,7 @@
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button (click)="close()">Cancel</button>
-  <button
-    mat-raised-button
-    color="primary"
-    [mat-dialog-close]="true"
-    cdkFocusInitial
-  >
+  <button mat-raised-button color="primary" (click)="confirm()" cdkFocusInitial>
     Confirm
   </button>
 </div>
