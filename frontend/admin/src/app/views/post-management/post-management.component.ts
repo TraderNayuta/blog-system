@@ -57,7 +57,6 @@ export class PostManagementComponent implements OnInit, AfterViewInit {
   }
 
   pageChange(event: PageEvent) {
-    console.log(event);
     this.queryPostList();
   }
 
@@ -72,11 +71,12 @@ export class PostManagementComponent implements OnInit, AfterViewInit {
       },
     });
 
-    const handler = type === 'Delete' ? this.deletePost : this.publishPost;
-
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        handler(post.id);
+        console.log(type);
+        type === 'Delete'
+          ? this.deletePost(post.id)
+          : this.publishPost(post.id);
       }
     });
   }
@@ -86,6 +86,9 @@ export class PostManagementComponent implements OnInit, AfterViewInit {
   }
 
   deletePost(postId: number): void {
-    // 删除文章
+    console.log('deletePost');
+    this.postService.deletePost(postId).subscribe((res) => {
+      this.queryPostList();
+    });
   }
 }

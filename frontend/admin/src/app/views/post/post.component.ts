@@ -146,7 +146,9 @@ export class PostComponent implements OnInit {
   preview(): void {
     if (this.form.touched) {
       // If form changes has not been saved
-      this.snackBar.open('您有更改尚未保存，请保存后再预览！');
+      this.snackBar.open(
+        'Changes have not been saved, please save before previewing!'
+      );
     } else {
       this.router.navigateByUrl(`/previewPost/${this.postId}`);
     }

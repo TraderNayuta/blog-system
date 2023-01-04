@@ -1,7 +1,7 @@
 <div class="post-management">
   <div class="header-operation">
     <mat-form-field>
-      <mat-label>标题</mat-label>
+      <mat-label>Title</mat-label>
       <input
         matInput
         [(ngModel)]="searchString"
@@ -25,7 +25,7 @@
         aria-label="Create a new post"
         routerLink="/createPost"
       >
-        新增文章
+        New Post
       </button>
     </div>
   </div>
@@ -39,7 +39,7 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="enTitle">
-      <th mat-header-cell *matHeaderCellDef>英文标题</th>
+      <th mat-header-cell *matHeaderCellDef>English Title</th>
       <td mat-cell *matCellDef="let element">
         <a class="post-link" [routerLink]="['/editPost', element.id]">
           {{ element.enTitle }}
@@ -48,7 +48,7 @@
     </ng-container>
 
     <ng-container matColumnDef="categories">
-      <th mat-header-cell *matHeaderCellDef>分类</th>
+      <th mat-header-cell *matHeaderCellDef>Category</th>
       <td mat-cell *matCellDef="let element">
         <mat-chip-list
           *ngIf="
@@ -65,7 +65,7 @@
     </ng-container>
 
     <ng-container matColumnDef="tags">
-      <th mat-header-cell *matHeaderCellDef>标签</th>
+      <th mat-header-cell *matHeaderCellDef>Tag</th>
       <td mat-cell *matCellDef="let element">
         <mat-chip-list
           *ngIf="element.tags && element.tags.length !== 0; else elseBlock"
@@ -81,14 +81,14 @@
     </ng-container>
 
     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef>状态</th>
+      <th mat-header-cell *matHeaderCellDef>Status</th>
       <td mat-cell *matCellDef="let element">
         {{ element.status }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>操作</th>
+      <th mat-header-cell *matHeaderCellDef>Action</th>
       <td mat-cell *matCellDef="let element">
         <button
           mat-icon-button
@@ -118,7 +118,7 @@
           mat-icon-button
           color="warn"
           aria-label="Delete this post"
-          (click)="openDialog('Publish', element)"
+          (click)="openDialog('Delete', element)"
         >
           <mat-icon>delete</mat-icon>
         </button>

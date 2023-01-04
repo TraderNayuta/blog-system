@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Post } from './post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { InsertResult, Repository } from 'typeorm';
+import { DeleteResult, InsertResult, Repository } from 'typeorm';
 import { SearchPaginatorParams } from 'src/common.dto';
 import { PostDto } from './post.dto';
 
@@ -58,5 +58,14 @@ export class PostService {
       .add(createPostDto.categories);
 
     return post;
+  }
+
+  async deletePost(postId: number): Promise<DeleteResult> {
+    return await this.postRepository
+      .createQueryBuilder()
+      .delete()
+      .from('Post')
+      .where('id = :id', { id: postId })
+      .execute();
   }
 }
