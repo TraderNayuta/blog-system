@@ -1,4 +1,5 @@
 import { Category } from 'src/category/category.entity';
+import { PostStatus } from 'src/common.type';
 import { Tag } from 'src/tag/tag.entity';
 import {
   Column,
@@ -34,6 +35,9 @@ export class Post {
 
   @Column()
   enContent: string;
+
+  @Column()
+  status: PostStatus;
 
   @CreateDateColumn()
   createTime?: Date;

@@ -29,11 +29,13 @@ export class PostController {
 
     const [records, total] = await this.postService.queryPostList(query);
 
+    console.log(records, total);
+
     return {
       data: {
         records,
-        pageSize,
-        pageIndex,
+        pageSize: parseInt(pageSize),
+        pageIndex: parseInt(pageIndex),
         total,
       },
       msg: 'query post list success!',

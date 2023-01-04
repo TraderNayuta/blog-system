@@ -18,14 +18,12 @@ export class PostService {
     const { searchString, pageSize, pageIndex } = queryParams;
 
     return this.postRepository
-      .createQueryBuilder('post')
-      .where(
-        'post.zhTitle LIKE :searchString OR post.enTitle LIKE :searchString',
-      )
-      .setParameters({ searchString })
-      .skip(pageSize * pageIndex)
-      .take(pageSize)
+      .createQueryBuilder()
+      .skip(parseInt(pageSize) * parseInt(pageIndex))
+      .take(parseInt(pageSize))
       .getManyAndCount();
+
+    // return this.postRepository.createQueryBuilder('post').getManyAndCount();
   }
 
   async createPost(createPostDto: PostDto): Promise<InsertResult> {
@@ -40,6 +38,7 @@ export class PostService {
           enTitle: createPostDto.enTitle,
           zhContent: createPostDto.zhContent,
           enContent: createPostDto.enContent,
+          status: createPostDto.status,
         },
       ])
       .execute();

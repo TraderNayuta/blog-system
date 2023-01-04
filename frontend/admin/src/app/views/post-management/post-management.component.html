@@ -1,7 +1,7 @@
 <div class="post-management">
   <div class="header-operation">
     <mat-form-field>
-      <mat-label>Filter</mat-label>
+      <mat-label>标题</mat-label>
       <input
         matInput
         [(ngModel)]="searchString"
@@ -30,11 +30,19 @@
     </div>
   </div>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef>标题</th>
+    <ng-container matColumnDef="zhTitle">
+      <th mat-header-cell *matHeaderCellDef>中文标题</th>
       <td mat-cell *matCellDef="let element">
         <a class="post-link" [routerLink]="['/editPost', element.id]">
-          {{ element.title }}
+          {{ element.zhTitle }}
+        </a>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="enTitle">
+      <th mat-header-cell *matHeaderCellDef>英文标题</th>
+      <td mat-cell *matCellDef="let element">
+        <a class="post-link" [routerLink]="['/editPost', element.id]">
+          {{ element.enTitle }}
         </a>
       </td>
     </ng-container>
@@ -42,22 +50,40 @@
     <ng-container matColumnDef="categories">
       <th mat-header-cell *matHeaderCellDef>分类</th>
       <td mat-cell *matCellDef="let element">
-        <mat-chip-list>
+        <mat-chip-list
+          *ngIf="
+            element.categories && element.categories.length !== 0;
+            else elseBlock
+          "
+        >
           <mat-chip *ngFor="let category of element.categories">
-            {{ category.name.zh }}
+            {{ category.zh }}
           </mat-chip>
         </mat-chip-list>
+        <ng-template #elseBlock> No Category </ng-template>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="tags">
       <th mat-header-cell *matHeaderCellDef>标签</th>
       <td mat-cell *matCellDef="let element">
-        <mat-chip-list>
+        <mat-chip-list
+          *ngIf="element.tags && element.tags.length !== 0; else elseBlock"
+        >
           <mat-chip *ngFor="let tag of element.tags">
-            {{ tag.name.zh }}
+            {{ tag.zh }}
           </mat-chip>
         </mat-chip-list>
+        <ng-template #elseBlock>
+          <span>No Tag</span>
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>状态</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.status }}
       </td>
     </ng-container>
 

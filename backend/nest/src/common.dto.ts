@@ -9,6 +9,6 @@ export class MultiLanguageBaseDto {
 
 export class SearchPaginatorParams {
   searchString?: string;
-  pageSize: number;
-  pageIndex: number;
+  pageSize: string;
+  pageIndex: string;
 }

@@ -14,7 +14,14 @@ import { PostService } from 'src/app/services/post/post.service';
 })
 export class PostManagementComponent implements OnInit, AfterViewInit {
   searchString: string;
-  displayedColumns: string[] = ['title', 'categories', 'tags', 'actions'];
+  displayedColumns: string[] = [
+    'zhTitle',
+    'enTitle',
+    'categories',
+    'tags',
+    'status',
+    'actions',
+  ];
   dataSource = new MatTableDataSource<Post>([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -45,7 +52,7 @@ export class PostManagementComponent implements OnInit, AfterViewInit {
     // 查询 Post 列表
     this.postService.queryPostList(queryParams).subscribe((res) => {
       this.paginator.length = res.data.total;
-      this.dataSource = new MatTableDataSource<Post>([]);
+      this.dataSource = new MatTableDataSource<Post>(res.data.records);
     });
   }
 
