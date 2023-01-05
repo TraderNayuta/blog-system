@@ -19,6 +19,7 @@ export class PostService {
 
     return this.postRepository
       .createQueryBuilder('post')
+      .orderBy('post.updateTime', 'DESC')
       .leftJoinAndSelect('post.categories', 'category')
       .leftJoinAndSelect('post.tags', 'tag')
       .skip(parseInt(pageSize) * parseInt(pageIndex))
