@@ -150,12 +150,12 @@ export class PostComponent implements OnInit {
       if (this.postId) {
         this.postService.updatePost(this.postId, params).subscribe((res) => {
           // Mark the form as untouched after successfully saving, otherwise when click preview it will not be able to judge whether the form has unsaved changes.
-          this.form.markAllAsTouched();
+          this.form.markAsUntouched();
         });
       } else {
         this.postService.createPost(params).subscribe((res) => {
           this.postId = res.data;
-          this.form.markAllAsTouched();
+          this.form.markAsUntouched();
         });
       }
     }
