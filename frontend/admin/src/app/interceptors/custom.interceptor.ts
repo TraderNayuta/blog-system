@@ -4,13 +4,20 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { GlobalService } from '../services/global/global.service';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class CustomInterceptor implements HttpInterceptor {
-  constructor(private globalService: GlobalService) {}
+  constructor(
+    private globalService: GlobalService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   intercept(
     request: HttpRequest<unknown>,
@@ -30,6 +37,23 @@ export class CustomInterceptor implements HttpInterceptor {
       });
     }
 
-    return next.handle(req);
+    return next.handle(req).pipe(catchError((err) => this.handleError(err)));
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    const { statusCode, message } = error.error;
+
+    this.snackBar.open(`Error Code: ${statusCode}: ${message}`);
+
+    switch (statusCode) {
+      case 401:
+        localStorage.removeItem('token');
+        this.router.navigateByUrl('login');
+        break;
+      default:
+        break;
+    }
+
+    return throwError(() => new Error(message));
   }
 }
