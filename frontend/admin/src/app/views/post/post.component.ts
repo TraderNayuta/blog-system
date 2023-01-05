@@ -73,8 +73,8 @@ export class PostComponent implements OnInit {
       enTitle: [null, Validators.required],
       categories: [[], Validators.required],
       tags: [[], Validators.required],
-      zhContent: [null],
-      enContent: [null],
+      zhContent: [null, Validators.required],
+      enContent: [null, Validators.required],
     });
 
     this.globalService.categories.subscribe((categories) => {
@@ -131,9 +131,17 @@ export class PostComponent implements OnInit {
   formValidate(): void {
     // Validate the form
     this.form.markAllAsTouched();
+    if (!this.form.controls['zhContent'].value || !this.form.controls['enContent'].value) {
+      this.snackBar.open('Article Content is required!');
+    }
   }
 
   save(): void {
+    if (this.postId && !this.form.touched) {
+      this.snackBar.open('No need to save since there are no changes!');
+      return;
+    }
+
     this.formValidate();
 
     if (this.form.valid) {

@@ -19,6 +19,7 @@ export class PostManagementComponent implements OnInit, AfterViewInit {
     'enTitle',
     'categories',
     'tags',
+    'updateTime',
     'status',
     'actions',
   ];
