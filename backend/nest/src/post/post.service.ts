@@ -19,6 +19,12 @@ export class PostService {
 
     return this.postRepository
       .createQueryBuilder('post')
+      .where(
+        !!searchString
+          ? 'post.zhTitle LIKE :searchString OR post.enTitle LIKE :searchString'
+          : '',
+        { searchString: `%${searchString}%` },
+      )
       .orderBy('post.updateTime', 'DESC')
       .leftJoinAndSelect('post.categories', 'category')
       .leftJoinAndSelect('post.tags', 'tag')

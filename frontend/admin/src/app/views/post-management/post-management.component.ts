@@ -35,6 +35,11 @@ export class PostManagementComponent implements OnInit, AfterViewInit {
     this.queryPostList();
   }
 
+  clearSearchString() {
+    this.searchString = '';
+    this.applyFilter();
+  }
+
   applyFilter() {
     this.paginator.pageIndex = 0;
     this.queryPostList();
