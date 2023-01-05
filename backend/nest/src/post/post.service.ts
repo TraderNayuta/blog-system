@@ -15,7 +15,8 @@ export class PostService {
   async queryPostList(
     queryParams: SearchPaginatorParams,
   ): Promise<[Post[], number]> {
-    const { searchString, pageSize, pageIndex } = queryParams;
+    const { searchString, searchCategory, searchTag, pageSize, pageIndex } =
+      queryParams;
 
     return this.postRepository
       .createQueryBuilder('post')

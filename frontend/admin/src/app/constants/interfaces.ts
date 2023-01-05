@@ -49,6 +49,8 @@ export interface ActionDialogData {
 
 export interface SearchPaginatorParams {
   searchString?: string;
+  searchCategory?: string;
+  searchTag?: string;
   pageSize: number;
   pageIndex: number;
 }
