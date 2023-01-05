@@ -73,7 +73,6 @@ export class PostManagementComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log(type);
         type === 'Delete'
           ? this.deletePost(post.id)
           : this.publishPost(post.id);
@@ -82,11 +81,16 @@ export class PostManagementComponent implements OnInit, AfterViewInit {
   }
 
   publishPost(postId: number): void {
-    // 发布文章
+    this.postService
+      .updatePost(postId, {
+        status: 'published',
+      })
+      .subscribe((res) => {
+        this.queryPostList();
+      });
   }
 
   deletePost(postId: number): void {
-    console.log('deletePost');
     this.postService.deletePost(postId).subscribe((res) => {
       this.queryPostList();
     });

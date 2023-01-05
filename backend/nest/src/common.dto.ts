@@ -1,5 +1,5 @@
 export class BaseDto {
-  readonly id?: string;
+  readonly id?: number;
 }
 
 export class MultiLanguageBaseDto {

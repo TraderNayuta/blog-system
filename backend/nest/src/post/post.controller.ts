@@ -29,8 +29,6 @@ export class PostController {
 
     const [records, total] = await this.postService.queryPostList(query);
 
-    console.log(records, total);
-
     return {
       data: {
         records,
@@ -46,7 +44,6 @@ export class PostController {
   @HttpCode(200)
   async queryPostById(@Param('id') id: number): Promise<Response> {
     const post = await this.postService.queryPostById(id);
-    console.log(post);
     return {
       data: post,
       msg: 'query post detail success!',

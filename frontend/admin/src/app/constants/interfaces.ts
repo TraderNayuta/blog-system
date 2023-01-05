@@ -17,13 +17,13 @@ export interface Base {
 }
 
 export interface Post extends Base {
-  zhTitle: string;
-  enTitle: string;
-  tags: Tag[];
-  categories: Category[];
-  zhContent: string;
-  enContent: string;
-  status: PostStatus;
+  zhTitle?: string;
+  enTitle?: string;
+  tags?: Tag[];
+  categories?: Category[];
+  zhContent?: string;
+  enContent?: string;
+  status?: PostStatus;
 }
 
 export interface Tag extends Base {

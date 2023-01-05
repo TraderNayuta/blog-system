@@ -72,13 +72,6 @@ export class PostService {
   }
 
   async updatePost(id: number, updatePostDto: PostDto): Promise<UpdateResult> {
-    const params = { ...updatePostDto };
-    for (const key in params) {
-      if (!!params[key]) {
-        delete params[key];
-      }
-    }
-
     if (updatePostDto.tags) {
       const currentTags = await this.postRepository
         .createQueryBuilder()
@@ -107,12 +100,20 @@ export class PostService {
         .addAndRemove(updatePostDto.categories, currentCategories);
     }
 
-    return this.postRepository
+    const post = await this.postRepository
       .createQueryBuilder()
       .update(Post)
-      .set({ ...params } as any)
+      .set({
+        zhTitle: updatePostDto.zhTitle,
+        enTitle: updatePostDto.enTitle,
+        zhContent: updatePostDto.zhContent,
+        enContent: updatePostDto.enContent,
+        status: updatePostDto.status,
+      })
       .where('id = :id', { id })
       .execute();
+
+    return post;
   }
 
   async deletePost(id: number): Promise<DeleteResult> {
